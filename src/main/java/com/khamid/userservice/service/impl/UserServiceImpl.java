@@ -1,11 +1,11 @@
 package com.khamid.userservice.service.impl;
 
 import com.khamid.userservice.common.ListDto;
+import com.khamid.userservice.common.exps.NotFound;
 import com.khamid.userservice.model.UserDto;
 import com.khamid.userservice.model.UserEntity;
 import com.khamid.userservice.repository.UserRepository;
 import com.khamid.userservice.service.UserService;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> optional = userRepository.findById(id);
 
         if (optional.isEmpty()) {
-            throw new RuntimeException("User not found");
+            throw new NotFound("User not found");
         }
 
         UserEntity user = optional.get();
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> optional = userRepository.findById(id);
 
         if (optional.isEmpty()) {
-            throw new RuntimeException("User not exist");
+            throw new NotFound("User not exist");
         }
 
         return dto;

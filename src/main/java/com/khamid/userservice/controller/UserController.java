@@ -9,7 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@RestController("/user")
+@RestController
+@RequestMapping("api/users")
 public class UserController {
     @Autowired
     UserService userService;

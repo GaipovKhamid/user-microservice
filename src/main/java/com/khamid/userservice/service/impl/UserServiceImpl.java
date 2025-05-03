@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(UserDto dto, Long id) {
-        Optional<UserEntity> optional = userRepository.findById(id);
+        var optional = userRepository.findById(id);
 
         if (optional.isEmpty()) {
             throw new NotFound("User not found");
@@ -65,8 +65,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserById(UserDto dto, Long id){
-        Optional<UserEntity> optional = userRepository.findById(id);
+    public UserDto getUserById(UserDto dto, Long id) {
+        var optional = userRepository.findById(id);
 
         if (optional.isEmpty()) {
             throw new NotFound("User not exist");
@@ -77,6 +77,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new NotFound("User not exist");
+        }
         userRepository.deleteById(id);
     }
 

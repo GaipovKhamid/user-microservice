@@ -2,9 +2,12 @@ package com.khamid.userservice.service.impl;
 
 import com.khamid.userservice.common.ListDto;
 import com.khamid.userservice.common.exps.NotFound;
+import com.khamid.userservice.model.CompanyDto;
 import com.khamid.userservice.model.UserDto;
 import com.khamid.userservice.model.UserEntity;
+import com.khamid.userservice.model.UserWithCompanyDto;
 import com.khamid.userservice.repository.UserRepository;
+import com.khamid.userservice.service.CompanyClient;
 import com.khamid.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +20,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    CompanyClient companyClient;
 
     @Override
     public UserDto addUser(UserDto dto) {
@@ -96,5 +101,13 @@ public class UserServiceImpl implements UserService {
                                 .build())
                 .toList();
         return new ListDto<>(userDtoList);
+    }
+
+    @Override
+    public UserWithCompanyDto getUserWithCompany(Long userId){
+        UserEntity user = userRepository.findById(userId).orElseThrow();
+        CompanyDto companyDto = companyClient.getCompanyById(user.getCompanyId());
+
+        return new UserWithCompanyDto(user.getId(), user.getFirstName(), user.getLastName(), companyDto);
     }
 }

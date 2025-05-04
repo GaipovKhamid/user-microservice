@@ -2,6 +2,7 @@ package com.khamid.userservice.service;
 
 import com.khamid.userservice.common.ListDto;
 import com.khamid.userservice.model.UserDto;
+import com.khamid.userservice.model.UserWithCompanyDto;
 import org.springframework.data.domain.Pageable;
 
 
@@ -15,4 +16,6 @@ public interface UserService {
     void deleteUserById(Long id);
 
     ListDto<UserDto> getAllUser(Pageable pageable);
+
+    UserWithCompanyDto getUserWithCompany(Long userId);
 }

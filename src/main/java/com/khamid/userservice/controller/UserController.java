@@ -2,6 +2,7 @@ package com.khamid.userservice.controller;
 
 import com.khamid.userservice.common.ListDto;
 import com.khamid.userservice.model.UserDto;
+import com.khamid.userservice.model.UserWithCompanyDto;
 import com.khamid.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -39,5 +40,11 @@ public class UserController {
     @GetMapping("/allUsers")
     public ResponseEntity<ListDto<UserDto>> getAll(Pageable pageable) {
         return ResponseEntity.ok(userService.getAllUser(pageable));
+    }
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<UserWithCompanyDto> getUserWithCompany(@PathVariable Long id) {
+        UserWithCompanyDto userWithCompanyDto = userService.getUserWithCompany(id);
+        return ResponseEntity.ok(userWithCompanyDto);
     }
 }
